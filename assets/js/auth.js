@@ -260,7 +260,7 @@ function addLogoutButton() {
     // Check if logout button already exists
     if (document.querySelector('.logout-btn')) return;
     
-    const dFlex = document.querySelector('.d-flex');
+    const dFlex = document.querySelector('.login-signup-buttons');
     
     if (dFlex) {
         // Create logout button
@@ -282,7 +282,7 @@ function addLogoutButton() {
 // Remove logout button from navigation
 function removeLogoutButton() {
     const logoutBtn = document.querySelector('.logout-btn');
-    const dFlex = document.querySelector('.d-flex');
+    const dFlex = document.querySelector('.login-signup-buttons');
     
     if (logoutBtn) {
         logoutBtn.remove();
