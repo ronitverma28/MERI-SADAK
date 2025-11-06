@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Records - MERI SADAK</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="fas fa-road text-primary me-2"></i>
+                MERI SADAK
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="complaint.html">Complaint</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="records.html">Records</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact Us</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="py-4" style="margin-top: 76px; background: linear-gradient(135deg, var(--primary-color) 0%, #1a5f8a 100%); color: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-5 mb-3">Complaint Records</h1>
+                    <p class="lead">Track the status of road maintenance issues and see our progress</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="py-4 bg-light-custom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3"><i class="fas fa-filter me-2"></i>Filter Records</h5>
+                            <form id="filterForm">
+                                <!-- State and District Filters Row -->
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label for="stateFilter" class="form-label">State</label>
+                                        <select class="form-select" id="stateFilter" onchange="updateDistricts(); filterRecords()">
+                                            <option value="all">All States</option>
+                                            <!-- <option value="rajasthan">Rajasthan</option>
+                                            <option value="uttar-pradesh">Uttar Pradesh</option>
+                                            <option value="delhi">Delhi</option>
+                                            <option value="maharashtra">Maharashtra</option>
+                                            <option value="karnataka">Karnataka</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="districtFilter" class="form-label">District</label>
+                                        <select class="form-select" id="districtFilter" onchange="filterRecords()">
+                                            <option value="all">All Districts</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Existing Filters Row -->
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <label for="typeFilter" class="form-label">Issue Type</label>
+                                        <select class="form-select" id="typeFilter" onchange="filterRecords()">
+                                            <option value="all">All Types</option>
+                                            <option value="pothole">Pothole</option>
+                                            <option value="damaged-sign">Damaged Road Sign</option>
+                                            <option value="drainage">Drainage Problem</option>
+                                            <option value="streetlight">Street Light Issue</option>
+                                            <option value="road-surface">Road Surface Damage</option>
+                                            <option value="traffic-signal">Traffic Signal Problem</option>
+                                            <option value="sidewalk">Sidewalk Issue</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="statusFilter" class="form-label">Status</label>
+                                        <select class="form-select" id="statusFilter" onchange="filterRecords()">
+                                            <option value="all">All Status</option>
+                                            <option value="open">Open</option>
+                                            <option value="in-progress">In Progress</option>
+                                            <option value="closed">Closed</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="dateFilter" class="form-label">Date From</label>
+                                        <input type="date" class="form-control" id="dateFilter" onchange="filterRecords()">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="priorityFilter" class="form-label">Priority</label>
+                                        <select class="form-select" id="priorityFilter" onchange="filterRecords()">
+                                            <option value="all">All Priorities</option>
+                                            <option value="urgent">Urgent</option>
+                                            <option value="high">High</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="low">Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="clearFilters()">
+                                            <i class="fas fa-times me-2"></i>Clear Filters
+                                        </button>
+                                        <span class="ms-3 text-muted" id="recordCount">Showing 12 records</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Role-based Action Buttons -->
+                                <div class="row mt-4" id="actionButtons" style="display: none;">
+                                    <div class="col-12">
+                                        <h6 class="mb-3"><i class="fas fa-tools me-2"></i>Management Actions</h6>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <button class="btn btn-success" data-feature="new-project" onclick="showFeatureMessage('New Project')">
+                                                <i class="fas fa-plus me-2"></i>+ New Project
+                                            </button>
+                                            <button class="btn btn-primary" data-feature="download-report" onclick="showFeatureMessage('Download Report')">
+                                                <i class="fas fa-download me-2"></i>Download Report
+                                            </button>
+                                            <button class="btn btn-warning" data-feature="upload-data" onclick="showFeatureMessage('Upload Data')">
+                                                <i class="fas fa-upload me-2"></i>Upload Data
+                                            </button>
+                                            <button class="btn btn-info" data-feature="schedule-audit" onclick="showFeatureMessage('Schedule Audit')">
+                                                <i class="fas fa-clock me-2"></i>Schedule Audit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Records Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row" id="recordsContainer">
+                <!-- Records will be loaded from assets/data/records.json and rendered here -->
+            </div>
+
+            <!-- Pagination (dynamic) -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <nav aria-label="Records pagination" id="paginationContainer">
+                        <!-- Pagination controls will be injected here -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5><i class="fas fa-road me-2"></i>MERI SADAK</h5>
+                    <p>Your trusted partner in road maintenance and infrastructure improvement. Together, we build better communities.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="complaint.html">Report Issue</a></li>
+                        <li><a href="records.html">View Records</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4">
+                    <h5>Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@merisadak.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Main St, City, State 12345</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 MERI SADAK. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Made with <i class="fas fa-heart text-danger"></i> for better roads</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/auth.js"></script>
+    
+    <script>
+        function clearFilters() {
+            document.getElementById('stateFilter').value = 'all';
+            document.getElementById('districtFilter').value = 'all';
+            document.getElementById('typeFilter').value = 'all';
+            document.getElementById('statusFilter').value = 'all';
+            document.getElementById('dateFilter').value = '';
+            document.getElementById('priorityFilter').value = 'all';
+            updateDistricts();
+            filterRecords();
+            // update pagination after filters are applied
+            setTimeout(function() { if (typeof updatePagination === 'function') updatePagination(); }, 50);
+        }
+        
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is authenticated
+            if (!isAuthenticated()) {
+                // Redirect to login page
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Apply role-based filtering
+            applyRoleBasedFiltering();
+            
+            // Apply role-based feature control
+            applyRoleBasedFeatureControl();
+            
+            // Show action buttons if user has any management permissions
+            const actionButtons = document.getElementById('actionButtons');
+            if (canAddProjects() || canUploadData() || canDownloadReports() || canScheduleAudits()) {
+                actionButtons.style.display = 'block';
+            }
+            
+            // Update navigation
+            updateNavigationForAuth();
+        });
+        
+        // Function to show feature messages (demo purposes)
+        function showFeatureMessage(feature) {
+            showSuccessMessage(`${feature} feature clicked! This would open the ${feature} interface.`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role-Based Access Control Demo - MERI SADAK</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="fas fa-road text-primary me-2"></i>
+                MERI SADAK
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="complaint.html">Complaint</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="records.html">Records</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact Us</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Demo Section -->
+    <section class="py-5" style="margin-top: 76px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Role-Based Access Control Demo</h3>
+                            <p class="mb-0 mt-2">Test different user roles and their permissions</p>
+                        </div>
+                        <div class="card-body">
+                            <!-- Current Status -->
+                            <div id="currentStatus" class="alert alert-info mb-4">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <span id="statusText">Checking authentication status...</span>
+                            </div>
+                            
+                            <!-- Role Testing -->
+                            <div class="row mb-4">
+                                <div class="col-lg-4">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-success text-white">
+                                            <h5><i class="fas fa-user me-2"></i>User/Public</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>Credentials:</strong><br>user@rms.com / user123</p>
+                                            <p><strong>Permissions:</strong></p>
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-check text-success me-2"></i>View all records</li>
+                                                <li><i class="fas fa-times text-danger me-2"></i>Add new projects</li>
+                                                <li><i class="fas fa-times text-danger me-2"></i>Upload data</li>
+                                                <li><i class="fas fa-times text-danger me-2"></i>Download reports</li>
+                                                <li><i class="fas fa-times text-danger me-2"></i>Schedule audits</li>
+                                            </ul>
+                                            <button class="btn btn-success w-100" onclick="testRole('user@rms.com', 'user123')">
+                                                <i class="fas fa-sign-in-alt me-2"></i>Login as User
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-warning text-white">
+                                            <h5><i class="fas fa-building me-2"></i>State Government</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>Credentials:</strong><br>state@rms.com / state123</p>
+                                            <p><strong>Permissions:</strong></p>
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-check text-success me-2"></i>View state records only</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Add new projects</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Upload data</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Download reports</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Schedule audits</li>
+                                            </ul>
+                                            <button class="btn btn-warning w-100" onclick="testRole('state@rms.com', 'state123')">
+                                                <i class="fas fa-sign-in-alt me-2"></i>Login as State Gov
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-danger text-white">
+                                            <h5><i class="fas fa-landmark me-2"></i>Central Government</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><strong>Credentials:</strong><br>central@rms.com / central123</p>
+                                            <p><strong>Permissions:</strong></p>
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-check text-success me-2"></i>View all records</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Add new projects</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Upload data</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Download reports</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Schedule audits</li>
+                                            </ul>
+                                            <button class="btn btn-danger w-100" onclick="testRole('central@rms.com', 'central123')">
+                                                <i class="fas fa-sign-in-alt me-2"></i>Login as Central Gov
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Feature Testing -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5><i class="fas fa-tools me-2"></i>Feature Access Test</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-outline-success" id="testNewProject" onclick="testFeature('New Project')">
+                                                    <i class="fas fa-plus me-2"></i>+ New Project
+                                                </button>
+                                                <button class="btn btn-outline-primary" id="testDownloadReport" onclick="testFeature('Download Report')">
+                                                    <i class="fas fa-download me-2"></i>Download Report
+                                                </button>
+                                                <button class="btn btn-outline-warning" id="testUploadData" onclick="testFeature('Upload Data')">
+                                                    <i class="fas fa-upload me-2"></i>Upload Data
+                                                </button>
+                                                <button class="btn btn-outline-info" id="testScheduleAudit" onclick="testFeature('Schedule Audit')">
+                                                    <i class="fas fa-clock me-2"></i>Schedule Audit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5><i class="fas fa-chart-line me-2"></i>Records Access Test</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-grid gap-2">
+                                                <a href="records.html" class="btn btn-outline-secondary" id="testRecordsAccess">
+                                                    <i class="fas fa-database me-2"></i>View Records
+                                                </a>
+                                                <button class="btn btn-outline-dark" onclick="showCurrentPermissions()">
+                                                    <i class="fas fa-info-circle me-2"></i>Show Current Permissions
+                                                </button>
+                                                <button class="btn btn-outline-danger" onclick="logoutUser()">
+                                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Current Session Info -->
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5><i class="fas fa-user-circle me-2"></i>Current Session Information</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <strong>User:</strong><br>
+                                                    <span id="currentUser" class="text-muted">Not logged in</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <strong>Role:</strong><br>
+                                                    <span id="currentRole" class="text-muted">None</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <strong>State:</strong><br>
+                                                    <span id="currentState" class="text-muted">N/A</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <strong>Records Access:</strong><br>
+                                                    <span id="recordsAccess" class="text-muted">No</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/auth.js"></script>
+    
+    <script>
+        function testRole(email, password) {
+            loginUser(email, password);
+            updateStatus();
+        }
+        
+        function testFeature(feature) {
+            if (!isAuthenticated()) {
+                showErrorMessage('Please login first to test features.');
+                return;
+            }
+            
+            let canAccess = false;
+            switch(feature) {
+                case 'New Project':
+                    canAccess = canAddProjects();
+                    break;
+                case 'Download Report':
+                    canAccess = canDownloadReports();
+                    break;
+                case 'Upload Data':
+                    canAccess = canUploadData();
+                    break;
+                case 'Schedule Audit':
+                    canAccess = canScheduleAudits();
+                    break;
+            }
+            
+            if (canAccess) {
+                showSuccessMessage(`${feature} feature is accessible for your role!`);
+            } else {
+                showErrorMessage(`${feature} feature is not accessible for your role.`);
+            }
+        }
+        
+        function showCurrentPermissions() {
+            if (!isAuthenticated()) {
+                showErrorMessage('Please login first to view permissions.');
+                return;
+            }
+            
+            const permissions = {
+                'View Records': canViewRecords(),
+                'Add Projects': canAddProjects(),
+                'Upload Data': canUploadData(),
+                'Download Reports': canDownloadReports(),
+                'Schedule Audits': canScheduleAudits(),
+                'See All States': canSeeAllStates()
+            };
+            
+            let permissionText = 'Current Permissions:\n';
+            for (const [permission, allowed] of Object.entries(permissions)) {
+                permissionText += `${permission}: ${allowed ? '✓' : '✗'}\n`;
+            }
+            
+            alert(permissionText);
+        }
+        
+        function updateStatus() {
+            const statusText = document.getElementById('statusText');
+            const currentUser = document.getElementById('currentUser');
+            const currentRole = document.getElementById('currentRole');
+            const currentState = document.getElementById('currentState');
+            const recordsAccess = document.getElementById('recordsAccess');
+            const currentStatus = document.getElementById('currentStatus');
+            const testRecordsAccess = document.getElementById('testRecordsAccess');
+            
+            if (isAuthenticated()) {
+                const user = getCurrentUser();
+                const role = getCurrentRole();
+                const state = getUserState();
+                
+                currentStatus.className = 'alert alert-success';
+                statusText.textContent = `Logged in as ${user.name} (${role.replace('-', ' ').toUpperCase()})`;
+                
+                currentUser.textContent = user.name;
+                currentRole.textContent = role.replace('-', ' ').toUpperCase();
+                currentState.textContent = state || 'N/A';
+                recordsAccess.textContent = hasRecordsAccess() ? 'Yes' : 'No';
+                
+                testRecordsAccess.className = hasRecordsAccess() ? 'btn btn-success' : 'btn btn-outline-secondary';
+                
+                // Update feature buttons
+                updateFeatureButtons();
+            } else {
+                currentStatus.className = 'alert alert-warning';
+                statusText.textContent = 'Not logged in. Please login to test role-based features.';
+                
+                currentUser.textContent = 'Not logged in';
+                currentRole.textContent = 'None';
+                currentState.textContent = 'N/A';
+                recordsAccess.textContent = 'No';
+                
+                testRecordsAccess.className = 'btn btn-outline-secondary';
+                
+                // Reset feature buttons
+                resetFeatureButtons();
+            }
+        }
+        
+        function updateFeatureButtons() {
+            const buttons = {
+                'testNewProject': canAddProjects(),
+                'testDownloadReport': canDownloadReports(),
+                'testUploadData': canUploadData(),
+                'testScheduleAudit': canScheduleAudits()
+            };
+            
+            for (const [buttonId, canAccess] of Object.entries(buttons)) {
+                const button = document.getElementById(buttonId);
+                if (canAccess) {
+                    button.className = button.className.replace('btn-outline-', 'btn-');
+                    button.disabled = false;
+                } else {
+                    button.className = button.className.replace('btn-', 'btn-outline-');
+                    button.disabled = true;
+                }
+            }
+        }
+        
+        function resetFeatureButtons() {
+            const buttonIds = ['testNewProject', 'testDownloadReport', 'testUploadData', 'testScheduleAudit'];
+            buttonIds.forEach(id => {
+                const button = document.getElementById(id);
+                button.className = button.className.replace('btn-', 'btn-outline-');
+                button.disabled = true;
+            });
+        }
+        
+        // Update status on page load and when authentication changes
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus();
+            updateNavigationForAuth();
+        });
+        
+        // Listen for authentication changes
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'meriSadakUser' || e.key === 'meriSadakRole') {
+                updateStatus();
+                updateNavigationForAuth();
+            }
+        });
+    </script>
+</body>
+</html>
