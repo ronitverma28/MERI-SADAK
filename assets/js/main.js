@@ -439,7 +439,27 @@ function fetchAndRenderRecords() {
 
     // show loading placeholder
     container.innerHTML = '<div class="col-12 text-center py-4">Loading records...</div>';
+    // Use localStorage as primary source for records. If not present, fetch records.json and save to localStorage.
+    const localKey = 'merisadak_records';
+    let localRecords = [];
+    try {
+        localRecords = JSON.parse(localStorage.getItem(localKey) || '[]');
+        if (!Array.isArray(localRecords)) localRecords = [];
+    } catch (e) {
+        console.warn('Invalid local records in localStorage, clearing key.');
+        localRecords = [];
+        localStorage.removeItem(localKey);
+    }
 
+    if (localRecords && localRecords.length) {
+        // Primary: render local records
+        renderRecords(localRecords);
+        filterRecords();
+        setTimeout(function() { if (typeof updatePagination === 'function') updatePagination(); }, 60);
+        return;
+    }
+
+    // If no local records, fetch remote and store locally
     fetch('assets/data/records.json')
         .then(resp => {
             if (!resp.ok) throw new Error('Failed to load records.json');
@@ -447,10 +467,13 @@ function fetchAndRenderRecords() {
         })
         .then(data => {
             if (!Array.isArray(data)) throw new Error('Invalid records format');
+            try {
+                localStorage.setItem(localKey, JSON.stringify(data));
+            } catch (e) {
+                console.warn('Unable to save fetched records to localStorage', e);
+            }
             renderRecords(data);
-            // After rendering, run filters to reflect current filter state
             filterRecords();
-            // Then apply pagination (run slightly later to allow role-based filter override to execute)
             setTimeout(function() { if (typeof updatePagination === 'function') updatePagination(); }, 60);
         })
         .catch(err => {

@@ -92,7 +92,34 @@ function loginUser(email, password) {
     
     // Show success message
     showSuccessMessage(`Welcome back, ${credentials.name}!`);
-    
+    // After login, ensure records.json is copied into localStorage so records are available locally
+    try {
+        fetch('assets/data/records.json')
+            .then(resp => { if (!resp.ok) throw new Error('Failed to load records.json'); return resp.json(); })
+            .then(remoteRecords => {
+                try {
+                    const key = 'merisadak_records';
+                    const existing = JSON.parse(localStorage.getItem(key) || '[]');
+                    const map = {};
+                    // Keep existing records first (avoid duplicates)
+                    (existing || []).forEach(r => { if (r && r.id) map[r.id] = r; });
+                    (remoteRecords || []).forEach(r => { if (r && r.id && !map[r.id]) map[r.id] = r; });
+                    // Convert map back to array — keep existing order then added remote ones
+                    const merged = [];
+                    (existing || []).forEach(r => { if (r && r.id) merged.push(r); });
+                    (remoteRecords || []).forEach(r => { if (r && r.id && !existing.find(e => e.id === r.id)) merged.push(r); });
+                    localStorage.setItem(key, JSON.stringify(merged));
+                } catch (err) {
+                    console.warn('Could not merge records into localStorage', err);
+                }
+            })
+            .catch(err => {
+                console.warn('Could not fetch remote records after login:', err);
+            });
+    } catch (e) {
+        console.warn('Error initiating records fetch:', e);
+    }
+
     // Redirect to appropriate page
     setTimeout(() => {
         window.location.href = 'index.html';
@@ -121,7 +148,32 @@ function loginUserLegacy(userData, role, state = null) {
     
     // Show success message
     showSuccessMessage(`Welcome back, ${userData.name || userData.email}!`);
-    
+    // After login, ensure records.json is copied into localStorage so records are available locally
+    try {
+        fetch('assets/data/records.json')
+            .then(resp => { if (!resp.ok) throw new Error('Failed to load records.json'); return resp.json(); })
+            .then(remoteRecords => {
+                try {
+                    const key = 'merisadak_records';
+                    const existing = JSON.parse(localStorage.getItem(key) || '[]');
+                    const map = {};
+                    (existing || []).forEach(r => { if (r && r.id) map[r.id] = r; });
+                    (remoteRecords || []).forEach(r => { if (r && r.id && !map[r.id]) map[r.id] = r; });
+                    const merged = [];
+                    (existing || []).forEach(r => { if (r && r.id) merged.push(r); });
+                    (remoteRecords || []).forEach(r => { if (r && r.id && !existing.find(e => e.id === r.id)) merged.push(r); });
+                    localStorage.setItem(key, JSON.stringify(merged));
+                } catch (err) {
+                    console.warn('Could not merge records into localStorage', err);
+                }
+            })
+            .catch(err => {
+                console.warn('Could not fetch remote records after login:', err);
+            });
+    } catch (e) {
+        console.warn('Error initiating records fetch:', e);
+    }
+
     // Redirect to appropriate page
     setTimeout(() => {
         window.location.href = 'index.html';
